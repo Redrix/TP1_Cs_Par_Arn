@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace TP1
 {
-    internal abstract class Grille : IGrille
+    internal abstract class Grille
     {
         protected int[,] grille;
         public static int HAUTEUR_GRILLE;
