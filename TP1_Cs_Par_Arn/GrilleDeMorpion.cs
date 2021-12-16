@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace TP1
+namespace TP1_Cs_Par_Arn
 {
     internal class GrilleDeMorpion : Grille
     {
@@ -25,13 +25,13 @@ namespace TP1
             }
         }
 
-        override public void deposerJeton(int joueur, int numeroCase)
+        public void deposerJeton(int joueur, int numeroCase)
         {
             numeroCase = numeroCase - 1;
             grille[numeroCase / LARGEUR_GRILLE, numeroCase % LARGEUR_GRILLE] = joueur;
         }
 
-        override public bool ligneComplete(int joueur, int ligne)
+        public bool ligneComplete(int joueur, int ligne)
         {
             for (int i = 0; i < LARGEUR_GRILLE; i++)
             {
@@ -43,7 +43,7 @@ namespace TP1
             return true;
         }
 
-        override public bool colonneComplete(int joueur, int colonne)
+        public bool colonneComplete(int joueur, int colonne)
         {
             for (int i = 0; i < HAUTEUR_GRILLE; i++)
             {
@@ -75,7 +75,7 @@ namespace TP1
             }
         }
 
-        override public bool victoireJoueur(int joueur)
+        public bool victoireJoueur(int joueur)
         {
             for (int i = 0; i < LARGEUR_GRILLE; i++)
             {

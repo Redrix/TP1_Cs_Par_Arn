@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace TP1
+namespace TP1_Cs_Par_Arn
 {
     internal abstract class Grille
     {
@@ -21,21 +21,9 @@ namespace TP1
             NBR_CASES = grille.Length;
         }
 
-        public abstract void deposerJeton(int joueur, int emplaement);
-        public abstract bool ligneComplete(int joueur, int ligne);
-        public abstract bool colonneComplete(int joueur, int colonne);
-        public abstract bool victoireJoueur(int joueur);
-
-        public void affichage()
+        public int[,] Getgrille()
         {
-            for (int i = 0; i < HAUTEUR_GRILLE; i++)
-            {
-                for (int y = 0; y < LARGEUR_GRILLE; y++)
-                {
-                    Console.Write(grille[i, y] + " ");
-                }
-                Console.WriteLine();
-            }
+            return grille;
         }
     }
 }

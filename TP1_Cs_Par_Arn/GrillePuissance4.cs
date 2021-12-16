@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace TP1
+namespace TP1_Cs_Par_Arn
 {
     internal class GrillePuissance4 : Grille
     {
@@ -25,7 +25,7 @@ namespace TP1
             }
         }
 
-        override public void deposerJeton(int joueur, int colonne)
+        public void deposerJeton(int joueur, int colonne)
         {
             colonne = colonne - 1;
             for (int i = 0; i < HAUTEUR_GRILLE; i++)
@@ -47,7 +47,7 @@ namespace TP1
             }
         }
 
-        override public bool ligneComplete(int joueur, int ligne)
+        public bool ligneComplete(int joueur, int ligne)
         {
             int compteur = 0;
             for (int i = 0; i < LARGEUR_GRILLE; i++)
@@ -68,7 +68,7 @@ namespace TP1
             return false;
         }
 
-        override public bool colonneComplete(int joueur, int colonne)
+        public bool colonneComplete(int joueur, int colonne)
         {
             int compteur = 0;
             for (int i = 0; i < HAUTEUR_GRILLE; i++)
@@ -129,7 +129,7 @@ namespace TP1
             return false;
         }
 
-        override public bool victoireJoueur(int joueur)
+       public bool victoireJoueur(int joueur)
         {
             for (int i = 0; i < HAUTEUR_GRILLE; i++)
             {
