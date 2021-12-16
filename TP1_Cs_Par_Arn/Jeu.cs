@@ -13,52 +13,44 @@ namespace TP1_Cs_Par_Arn
             Jeu partie = new Jeu();
             Affichage affichage = new Affichage();
             bool rejouer = false;
-            int choix;
             affichage.Message("Bienvenu ! Veuillez choisir un jeu : \n1. Morpion\n2. Puissance 4");
-            while (!int.TryParse(Console.ReadLine(), out choix))
+            switch (Entree.GetUserIntInput(2))
             {
-                affichage.Message("Veuillez saisir un nombre");
-            }
-            while (choix < 1 || choix > 2)
-            {
-                affichage.Message("Veuillez saisir un nombre entre 1 et 2");
-                while (!int.TryParse(Console.ReadLine(), out choix))
-                {
-                    affichage.Message("Veuillez saisir un nombre");
-                }
-            }
+                case 1:
+                    do
+                    {
+                        partie.jouerMorpion();
+                        affichage.Message("Voulez vous jouer une autre partie de Morpion ? [o/n]");
+                        if (Entree.GetUserStringInput() == "o")
+                        {
+                            rejouer = true;
+                        }
+                        else
+                        {
+                            rejouer = false;
+                        }
+                    } while (rejouer);
+                    break;
 
-            if (choix == 1)
-            {
-                do
-                {
-                    partie.jouerMorpion();
-                    affichage.Message("Voulez vous jouer une autre partie de Morpion ? [o/n]");
-                    if (Console.ReadLine() == "o")
+                case 2:
+                    do
                     {
-                        rejouer = true;
-                    }
-                    else
-                    {
-                        rejouer = false;
-                    }
-                } while (rejouer);
-            }
-            else if (choix == 2)
-            {
-                do
-                {
-                    partie.jouerPuissance4();
-                   affichage.Message("Voulez vous jouer une autre partie de Puissance 4 ? [o/n]");
-                    if (Console.ReadLine() == "o")
-                    {
-                        rejouer = true;
-                    }
-                    else
-                    {
-                        rejouer = false;
-                    }
-                } while (rejouer);
+                        partie.jouerPuissance4();
+                        affichage.Message("Voulez vous jouer une autre partie de Puissance 4 ? [o/n]");
+                        if (Entree.GetUserStringInput() == "o")
+                        {
+                            rejouer = true;
+                        }
+                        else
+                        {
+                            rejouer = false;
+                        }
+                    } while (rejouer);
+                    break; 
+
+                default:
+                    affichage.Message("Une erreur est survenue, fin du programme");
+                    break;
             }
         }
 
@@ -68,47 +60,23 @@ namespace TP1_Cs_Par_Arn
         {
             GrilleDeMorpion grille = new GrilleDeMorpion(3, 3);
             Affichage affichage = new Affichage();
+
             int tour = 0;
-            int tourJoueur = 1;
             int emplacement;
+
             while (!grille.victoireJoueur(1) && !grille.victoireJoueur(2) && tour < GrilleDeMorpion.NBR_CASES)
             {
                 affichage.AffichageGrilleConsole(grille);
-                affichage.Message("Joueur " + tourJoueur + " : Veuillez saisir une case");
-                while (!int.TryParse(Console.ReadLine(), out emplacement))
-                {
-                    affichage.Message("Veuillez saisir un nombre");
-                }
-                while ((emplacement < 1 || emplacement > GrilleDeMorpion.NBR_CASES) || !grille.caseVide(emplacement))
-                {
-                    if (emplacement < 1 || emplacement > GrilleDeMorpion.NBR_CASES)
-                    {
-                        affichage.Message("Veuillez choisir une valeur entre 1 et " + GrilleDeMorpion.NBR_CASES);
-                        while (!int.TryParse(Console.ReadLine(), out emplacement))
-                        {
-                            affichage.Message("Veuillez saisir un nombre");
-                        }
-                    }
-                    else
-                    {
-                        affichage.Message("Veuillez choisir une case non utilisée");
-                        while (!int.TryParse(Console.ReadLine(), out emplacement))
-                        {
-                            affichage.Message("Veuillez saisir un nombre");
-                        }
-                    }
+                affichage.Message("Joueur " + ((tour % 2) + 1) + " : Veuillez saisir une case");
+                emplacement = Entree.GetUserIntInput(GrilleDeMorpion.NBR_CASES);
 
-                }
-                grille.deposerJeton(tourJoueur, emplacement);
-                if (tourJoueur == 1)
+                while (!grille.caseVide(emplacement))
                 {
-                    tourJoueur = 2;
-                }
-                else
-                {
-                    tourJoueur = 1;
+                    affichage.Message("Veuillez choisir une case non utilisée");
+                    emplacement = Entree.GetUserIntInput(GrilleDeMorpion.NBR_CASES);
                 }
 
+                grille.deposerJeton((tour % 2) + 1, emplacement);
                 tour++;
 
             }
@@ -135,66 +103,42 @@ namespace TP1_Cs_Par_Arn
         // ------------------------------------------------Puissance4--------------------------------------------
         public void jouerPuissance4()
         {
-            GrillePuissance4 jeu = new GrillePuissance4(4, 7);
+            GrillePuissance4 grille = new GrillePuissance4(4, 7);
             Affichage affichage = new Affichage();
             int tour = 0;
-            int tourJoueur = 1;
             int emplacement;
-            while (!jeu.victoireJoueur(1) && !jeu.victoireJoueur(2) && tour < GrillePuissance4.NBR_CASES)
+            while (!grille.victoireJoueur(1) && !grille.victoireJoueur(2) && tour < GrillePuissance4.NBR_CASES)
             {
-                affichage.AffichageGrilleConsole(jeu);
-                affichage.Message("Joueur " + tourJoueur + " : Veuillez saisir une colonne");
-                while (!int.TryParse(Console.ReadLine(), out emplacement))
+                affichage.AffichageGrilleConsole(grille);
+                affichage.Message("Joueur " + ((tour % 2) + 1) + " : Veuillez saisir une colonne");
+                emplacement = Entree.GetUserIntInput(GrillePuissance4.LARGEUR_GRILLE);
+                while (!grille.colonneValide(emplacement))
                 {
-                    affichage.Message("Veuillez saisir un nombre");
-                }
-                while ((emplacement < 1 || emplacement > GrillePuissance4.LARGEUR_GRILLE) || !jeu.colonneValide(emplacement))
-                {
-                    if (emplacement < 1 || emplacement > GrillePuissance4.LARGEUR_GRILLE)
+                    affichage.Message("Veuillez choisir un colonne non remplie");
+                    while (!int.TryParse(Console.ReadLine(), out emplacement))
                     {
-                        affichage.Message("Veuillez choisir une valeur entre 1 et " + GrillePuissance4.LARGEUR_GRILLE);
-                        while (!int.TryParse(Console.ReadLine(), out emplacement))
-                        {
-                            affichage.Message("Veuillez saisir un nombre");
-                        }
+                        affichage.Message("Veuillez saisir un nombre");
+                        emplacement = Entree.GetUserIntInput(GrillePuissance4.LARGEUR_GRILLE);
                     }
-                    else
-                    {
-                        affichage.Message("Veuillez choisir un colonne non remplie");
-                        while (!int.TryParse(Console.ReadLine(), out emplacement))
-                        {
-                            affichage.Message("Veuillez saisir un nombre");
-                        }
-                    }
-
                 }
-                jeu.deposerJeton(tourJoueur, emplacement);
-                if (tourJoueur == 1)
-                {
-                    tourJoueur = 2;
-                }
-                else
-                {
-                    tourJoueur = 1;
-                }
-
+                grille.deposerJeton(((tour % 2) + 1), emplacement);
                 tour++;
 
             }
 
-            if (jeu.victoireJoueur(1))
+            if (grille.victoireJoueur(1))
             {
-                affichage.AffichageGrilleConsole(jeu);
+                affichage.AffichageGrilleConsole(grille);
                 affichage.Message("Le joueur 1 a gagné");
             }
-            else if (jeu.victoireJoueur(2))
+            else if (grille.victoireJoueur(2))
             {
-                affichage.AffichageGrilleConsole(jeu);
+                affichage.AffichageGrilleConsole(grille);
                 affichage.Message("Le joueur 2 a gagné");
             }
             else
             {
-                affichage.AffichageGrilleConsole(jeu);
+                affichage.AffichageGrilleConsole(grille);
                 affichage.Message("Match nul");
             }
         }
