@@ -12,7 +12,9 @@ namespace TP1_Cs_Par_Arn
         {
             Jeu partie = new Jeu();
             Affichage affichage = new Affichage();
+
             bool rejouer = false;
+
             affichage.Message("Bienvenu ! Veuillez choisir un jeu : \n1. Morpion\n2. Puissance 4");
             switch (Entree.GetUserIntInput(2))
             {
@@ -60,15 +62,16 @@ namespace TP1_Cs_Par_Arn
         {
             GrilleDeMorpion grille = new GrilleDeMorpion(3, 3);
             Affichage affichage = new Affichage();
+            Joueur player1 = new Joueur(1);
+            Joueur player2 = new Joueur(2);
 
             int tour = 0;
-            int emplacement;
 
-            while (!grille.victoireJoueur(1) && !grille.victoireJoueur(2) && tour < GrilleDeMorpion.NBR_CASES)
+            while (!grille.victoireJoueur(player1) && !grille.victoireJoueur(player2) && tour < GrilleDeMorpion.NBR_CASES)
             {
                 affichage.AffichageGrilleConsole(grille);
                 affichage.Message("Joueur " + ((tour % 2) + 1) + " : Veuillez saisir une case");
-                emplacement = Entree.GetUserIntInput(GrilleDeMorpion.NBR_CASES);
+                int emplacement = Entree.GetUserIntInput(GrilleDeMorpion.NBR_CASES);
 
                 while (!grille.caseVide(emplacement))
                 {
@@ -81,15 +84,15 @@ namespace TP1_Cs_Par_Arn
 
             }
 
-            if (grille.victoireJoueur(1))
+            if (grille.victoireJoueur(player1))
             {
                 affichage.AffichageGrilleConsole(grille);
-                affichage.Message("Le joueur 1 a gagné");
+                affichage.Message("Le joueur " + player1.numero + " a gagné");
             }
-            else if (grille.victoireJoueur(2))
+            else if (grille.victoireJoueur(player2))
             {
                 affichage.AffichageGrilleConsole(grille);
-                affichage.Message("Le joueur 2 a gagné");
+                affichage.Message("Le joueur " + player2.numero + " a gagné");
             }
             else
             {
@@ -105,13 +108,16 @@ namespace TP1_Cs_Par_Arn
         {
             GrillePuissance4 grille = new GrillePuissance4(4, 7);
             Affichage affichage = new Affichage();
+            Joueur player1 = new Joueur(1);
+            Joueur player2 = new Joueur(2);
+
             int tour = 0;
-            int emplacement;
-            while (!grille.victoireJoueur(1) && !grille.victoireJoueur(2) && tour < GrillePuissance4.NBR_CASES)
+
+            while (!grille.victoireJoueur(player1) && !grille.victoireJoueur(player2) && tour < GrillePuissance4.NBR_CASES)
             {
                 affichage.AffichageGrilleConsole(grille);
                 affichage.Message("Joueur " + ((tour % 2) + 1) + " : Veuillez saisir une colonne");
-                emplacement = Entree.GetUserIntInput(GrillePuissance4.LARGEUR_GRILLE);
+                int emplacement = Entree.GetUserIntInput(GrillePuissance4.LARGEUR_GRILLE);
                 while (!grille.colonneValide(emplacement))
                 {
                     affichage.Message("Veuillez choisir un colonne non remplie");
@@ -126,15 +132,15 @@ namespace TP1_Cs_Par_Arn
 
             }
 
-            if (grille.victoireJoueur(1))
+            if (grille.victoireJoueur(player1))
             {
                 affichage.AffichageGrilleConsole(grille);
-                affichage.Message("Le joueur 1 a gagné");
+                affichage.Message("Le joueur " + player1.numero + " a gagné");
             }
-            else if (grille.victoireJoueur(2))
+            else if (grille.victoireJoueur(player2))
             {
                 affichage.AffichageGrilleConsole(grille);
-                affichage.Message("Le joueur 2 a gagné");
+                affichage.Message("Le joueur 2 " + player2 +" a gagné");
             }
             else
             {

@@ -75,23 +75,23 @@ namespace TP1_Cs_Par_Arn
             }
         }
 
-        public bool victoireJoueur(int joueur)
+        public bool victoireJoueur(Joueur joueur)
         {
             for (int i = 0; i < LARGEUR_GRILLE; i++)
             {
-                if (ligneComplete(joueur, i))
+                if (ligneComplete(joueur.numero, i))
                 {
                     return true;
                 }
             }
             for (int i = 0; i < HAUTEUR_GRILLE; i++)
             {
-                if (colonneComplete(joueur, i))
+                if (colonneComplete(joueur.numero, i))
                 {
                     return true;
                 }
             }
-            if (diagonaleComplete(joueur, 1) || diagonaleComplete(joueur, 2))
+            if (diagonaleComplete(joueur.numero, 1) || diagonaleComplete(joueur.numero, 2))
             {
                 return true;
             }
