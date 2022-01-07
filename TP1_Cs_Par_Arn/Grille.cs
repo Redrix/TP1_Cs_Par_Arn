@@ -9,9 +9,9 @@ namespace TP1_Cs_Par_Arn
     internal abstract class Grille
     {
         protected int[,] grille;
-        public static int HAUTEUR_GRILLE;
-        public static int LARGEUR_GRILLE;
-        public static int NBR_CASES;
+        public readonly int HAUTEUR_GRILLE;
+        public readonly int LARGEUR_GRILLE;
+        public readonly int NBR_CASES;
 
         public Grille(int hauteur, int largeur)
         {
@@ -21,7 +21,7 @@ namespace TP1_Cs_Par_Arn
             NBR_CASES = grille.Length;
         }
 
-        public int[,] Getgrille()
+        public int[,] GetGrille()
         {
             return grille;
         }

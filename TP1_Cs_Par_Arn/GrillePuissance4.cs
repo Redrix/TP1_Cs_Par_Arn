@@ -128,28 +128,5 @@ namespace TP1_Cs_Par_Arn
             }
             return false;
         }
-
-       public bool victoireJoueur(Joueur joueur)
-        {
-            for (int i = 0; i < HAUTEUR_GRILLE; i++)
-            {
-                if (ligneComplete(joueur.numero, i))
-                {
-                    return true;
-                }
-            }
-            for (int i = 0; i < LARGEUR_GRILLE; i++)
-            {
-                if (colonneComplete(joueur.numero, i))
-                {
-                    return true;
-                }
-            }
-            if (diagonalComplete(joueur.numero))
-            {
-                return true;
-            }
-            return false;
-        }
     }
 }

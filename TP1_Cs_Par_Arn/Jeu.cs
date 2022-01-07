@@ -6,147 +6,20 @@ using System.Threading.Tasks;
 
 namespace TP1_Cs_Par_Arn
 {
-    internal class Jeu
+    internal abstract class Jeu
     {
-        static void Main(String[] args)
+        protected Affichage affichage;
+        protected List<Joueur> joueurs = new List<Joueur>();
+
+        public Jeu(int nbrJoueurs)
         {
-            Jeu partie = new Jeu();
-            Affichage affichage = new Affichage();
-
-            bool rejouer = false;
-
-            affichage.Message("Bienvenu ! Veuillez choisir un jeu : \n1. Morpion\n2. Puissance 4");
-            switch (Entree.GetUserIntInput(2))
+            affichage = new Affichage();
+            for(int i = 0; i < nbrJoueurs; i++)
             {
-                case 1:
-                    do
-                    {
-                        partie.jouerMorpion();
-                        affichage.Message("Voulez vous jouer une autre partie de Morpion ? [o/n]");
-                        if (Entree.GetUserStringInput() == "o")
-                        {
-                            rejouer = true;
-                        }
-                        else
-                        {
-                            rejouer = false;
-                        }
-                    } while (rejouer);
-                    break;
-
-                case 2:
-                    do
-                    {
-                        partie.jouerPuissance4();
-                        affichage.Message("Voulez vous jouer une autre partie de Puissance 4 ? [o/n]");
-                        if (Entree.GetUserStringInput() == "o")
-                        {
-                            rejouer = true;
-                        }
-                        else
-                        {
-                            rejouer = false;
-                        }
-                    } while (rejouer);
-                    break; 
-
-                default:
-                    affichage.Message("Une erreur est survenue, fin du programme");
-                    break;
+                joueurs.Add(new Joueur(i + 1));
             }
         }
 
-
-        // -------------------------------------------------Morpion--------------------------------------------------
-        public void jouerMorpion()
-        {
-            GrilleDeMorpion grille = new GrilleDeMorpion(3, 3);
-            Affichage affichage = new Affichage();
-            Joueur player1 = new Joueur(1);
-            Joueur player2 = new Joueur(2);
-
-            int tour = 0;
-
-            while (!grille.victoireJoueur(player1) && !grille.victoireJoueur(player2) && tour < GrilleDeMorpion.NBR_CASES)
-            {
-                affichage.AffichageGrilleConsole(grille);
-                affichage.Message("Joueur " + ((tour % 2) + 1) + " : Veuillez saisir une case");
-                int emplacement = Entree.GetUserIntInput(GrilleDeMorpion.NBR_CASES);
-
-                while (!grille.caseVide(emplacement))
-                {
-                    affichage.Message("Veuillez choisir une case non utilisée");
-                    emplacement = Entree.GetUserIntInput(GrilleDeMorpion.NBR_CASES);
-                }
-
-                grille.deposerJeton((tour % 2) + 1, emplacement);
-                tour++;
-
-            }
-
-            if (grille.victoireJoueur(player1))
-            {
-                affichage.AffichageGrilleConsole(grille);
-                affichage.Message("Le joueur " + player1.numero + " a gagné");
-            }
-            else if (grille.victoireJoueur(player2))
-            {
-                affichage.AffichageGrilleConsole(grille);
-                affichage.Message("Le joueur " + player2.numero + " a gagné");
-            }
-            else
-            {
-                affichage.AffichageGrilleConsole(grille);
-                affichage.Message("Match nul");
-            }
-
-        }
-
-
-        // ------------------------------------------------Puissance4--------------------------------------------
-        public void jouerPuissance4()
-        {
-            GrillePuissance4 grille = new GrillePuissance4(4, 7);
-            Affichage affichage = new Affichage();
-            Joueur player1 = new Joueur(1);
-            Joueur player2 = new Joueur(2);
-
-            int tour = 0;
-
-            while (!grille.victoireJoueur(player1) && !grille.victoireJoueur(player2) && tour < GrillePuissance4.NBR_CASES)
-            {
-                affichage.AffichageGrilleConsole(grille);
-                affichage.Message("Joueur " + ((tour % 2) + 1) + " : Veuillez saisir une colonne");
-                int emplacement = Entree.GetUserIntInput(GrillePuissance4.LARGEUR_GRILLE);
-                while (!grille.colonneValide(emplacement))
-                {
-                    affichage.Message("Veuillez choisir un colonne non remplie");
-                    while (!int.TryParse(Console.ReadLine(), out emplacement))
-                    {
-                        affichage.Message("Veuillez saisir un nombre");
-                        emplacement = Entree.GetUserIntInput(GrillePuissance4.LARGEUR_GRILLE);
-                    }
-                }
-                grille.deposerJeton(((tour % 2) + 1), emplacement);
-                tour++;
-
-            }
-
-            if (grille.victoireJoueur(player1))
-            {
-                affichage.AffichageGrilleConsole(grille);
-                affichage.Message("Le joueur " + player1.numero + " a gagné");
-            }
-            else if (grille.victoireJoueur(player2))
-            {
-                affichage.AffichageGrilleConsole(grille);
-                affichage.Message("Le joueur 2 " + player2 +" a gagné");
-            }
-            else
-            {
-                affichage.AffichageGrilleConsole(grille);
-                affichage.Message("Match nul");
-            }
-        }
+        public abstract void jouer();
     }
 }
